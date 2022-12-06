@@ -3,21 +3,21 @@
   "type": "project",
   "authors": [
     {
-      "name": "youngkolya",
-      "email": "gorlienko787@gmail.com"
+      "name": "youngkolya"
     }
   ],
   "description": "",
   "require": {
-    "wp-cli/php-cli-tools": "^0.11.15"
+    "wp-cli/php-cli-tools": "^0.11.11"
   },
   "bin": [
-    "bin/tic-tac-toe.php"
+    "bin/tic-tac-toe"
   ],
   "autoload": {
     "files": [
       "src/Controller.php",
-      "src/View.php"
+      "src/View.php",
+      "src/Model.php"
     ]
   }
 }

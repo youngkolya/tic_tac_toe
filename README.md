@@ -37,7 +37,7 @@
 
 1. Установить composer, если он не установлен;
 2. Перейти в каталог, в который вы будете клонировать проект;
-3. Выполнить команду `composer require youngkolya/tic_tac_toe`;
+3. Выполнить команду `composer create-project youngkolya/tic-tac-toe`;
 4. Перейти в каталог vendor/bin;
 5. Запустить файл tic_tac_toe.bat.
 
