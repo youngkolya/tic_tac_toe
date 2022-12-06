@@ -4,7 +4,7 @@ namespace youngkolya\ticTacToe\Model;
 
 use Exception as Exception;
 use LogicException as LogicException;
-
+use RedBeanPHP\R as R;
 const DEFAULT_DIMENSION = 3;
 const DEFAULT_MARKUP = " ";
 const PLAYER_X_MARKUP = "X";
@@ -85,7 +85,7 @@ class Board
         ) {
             return PLAYER_O_MARKUP;
         }
-        
+
         if (
             $this->checkArr[2 * $this->dimension] == $this->dimension ||
             $this->checkArr[2 * $this->dimension + 1] == $this->dimension
@@ -136,10 +136,10 @@ class Board
         if ($markup == PLAYER_O_MARKUP) {
             $offset = -1;
         }
-    
+
         $this->checkArr[$i] += $offset;
         $this->checkArr[$this->dimension + $j] += $offset;
-    
+
         if (($i == $j) && ($i == ($this->dimension - 1 - $j))) {
             $this->checkArr[2 * $this->dimension] += $offset;
             $this->checkArr[2 * $this->dimension + 1] += $offset;
@@ -163,7 +163,7 @@ class Board
             throw new Exception("Incorrect dimension (should be 3 <= dim <= 10). Please try again.");
         }
     }
-    
+
     public function setId($id)
     {
         if (is_numeric($id)) {
@@ -214,11 +214,11 @@ class Board
     }
 
     public function openDatabase()
-{
-    if (!file_exists("gamedb.db")) {
-        $db = new \SQLite3('gamedb.db');
+    {
+        if (!file_exists("gamedb.db")) {
+            R::setup("sqlite:gamedb.db");
 
-    $gamesInfoTable = "CREATE TABLE gamesInfo(
+            $gamesInfoTable = "CREATE TABLE gamesInfo(
         idGame INTEGER PRIMARY KEY,
         gameData DATE,
         gameTime TIME,
@@ -226,26 +226,22 @@ class Board
         sizeBoard INTEGER,
         result TEXT
     )";
-    $db->exec($gamesInfoTable);
+            R::exec($gamesInfoTable);
 
 
-    $stepsInfoTable = "CREATE TABLE stepsInfo(
+            $stepsInfoTable = "CREATE TABLE stepsInfo(
         idGame INTEGER,
         playerMark TEXT,
         rowCoord INTEGER,
         colCoord INTEGER
     )";
-    $db->exec($stepsInfoTable);
-    } else {
-        $db = new \SQLite3('gamedb.db');
+            R::exec($stepsInfoTable);
+        }
     }
-    return $db;
-}
 
     public function endGame($idGame, $result)
     {
-        $db = openDatabase();
-        $db->exec("UPDATE gamesInfo
+        R::exec("UPDATE gamesInfo
             SET result = '$result'
             WHERE idGame = '$idGame'");
     }
