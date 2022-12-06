@@ -1,6 +1,6 @@
 <?php
 
-namespace youngkolya\tic_tac_toe\View;
+namespace youngkolya\ticTacToe\View;
 
     use function cli\prompt;
     use function cli\line;
